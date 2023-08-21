@@ -20,7 +20,9 @@
     <constraints>
       <xy x="8" y="13" width="709" height="258"/>
     </constraints>
-    <properties/>
+    <properties>
+      <enabled value="true"/>
+    </properties>
     <border type="none"/>
     <children>
       <component id="e0069" class="javax.swing.JTextField" binding="jTextField">
