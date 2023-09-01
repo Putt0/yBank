@@ -4,6 +4,12 @@
  */
 package github.com.putt0.view;
 
+import github.com.putt0.account.User;
+import github.com.putt0.storage.mysql.MySQL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Reinaldy Oliveira
@@ -95,6 +101,24 @@ public class Auth extends javax.swing.JFrame {
 
     private void joinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_joinActionPerformed
         // TODO add your handling code here:
+        
+        try {
+            User user = new User();
+            user.setName(userName.getText());
+            user.setPassword(userPassword.getText());
+            
+            MySQL mysql = new MySQL();
+            ResultSet resultSet = mysql.hasUser(user);
+            
+            if (resultSet.next()) {
+                JOptionPane.showMessageDialog(null, "Loading");
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos!");
+            }
+            
+        } catch (SQLException sQLException) {
+            JOptionPane.showMessageDialog(null, sQLException);
+        }
     }//GEN-LAST:event_joinActionPerformed
 
     /**
