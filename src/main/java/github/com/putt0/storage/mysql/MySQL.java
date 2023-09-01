@@ -1,16 +1,18 @@
 package github.com.putt0.storage.mysql;
 
+import github.com.putt0.account.User;
 import github.com.putt0.storage.Database;
 
 import javax.swing.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class MySQL {
 
-    Connection connection;
+    public static Connection connection;
 
     public Connection getConnection() {
         return connection;
@@ -43,6 +45,20 @@ public class MySQL {
                 System.err.print("-> Ocorreu um erro ao gerar a tabela: [User] ");
                 JOptionPane.showMessageDialog(null, sqlException.getMessage());
             }
+        }
+    }
+    
+    public ResultSet hasUser(User user) {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from User where name= ? and password= ?");
+            preparedStatement.setString(1, user.getName());
+            preparedStatement.setString(2, user.getPassword());
+            
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet;
+        } catch (SQLException sQLException) {
+            JOptionPane.showMessageDialog(null, sQLException);
+            return null;
         }
     }
 }
